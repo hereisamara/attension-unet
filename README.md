@@ -1,2 +1,2 @@
-# attension-unet
-copied repo and customized from Attension Unet[https://github.com/ozan-oktay/Attention-Gated-Networks]
+# attention-unet
+copied repo and customized from [Attention Unet](https://github.com/ozan-oktay/Attention-Gated-Networks)
