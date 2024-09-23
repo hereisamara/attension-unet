@@ -5,6 +5,25 @@ from os import listdir
 from os.path import join
 import cv2
 import datetime
+from PIL import Image
+
+def convert_mask_to_color(mask):
+    # Define color map
+    color_map = np.array([
+        [0, 0, 0],       # Class 0: Black
+        [255, 0, 0],     # Class 1: Red
+        [0, 255, 0],     # Class 2: Green
+        [0, 0, 255]      # Class 3: Blue
+    ])
+
+    # Convert the 2D mask to a 3D image (RGB)
+    height, width = mask.shape
+    color_mask = np.zeros((height, width, 3), dtype=np.uint8)
+
+    for label in range(4):  # Labels are 0, 1, 2, 3
+        color_mask[mask == label] = color_map[label]
+
+    return color_mask
 
 def is_image_file(filename):
     """Check if a file is a valid image file."""
@@ -61,7 +80,7 @@ class RGB3DDataset(data.Dataset):
 
         # Print shapes for debugging
         print(f"Image shape: {input.shape}, Mask shape: {target.shape}")
-
+        target = convert_mask_to_color(target)
         # Handle any exceptions or invalid data
         check_exceptions(input, target)
 
